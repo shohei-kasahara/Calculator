@@ -9,4 +9,5 @@
     <string name="number_2">Number 2</string>
     <string name="result_format">Result</string>
     <string name="clear">CLEAR</string>
+    <string name="error_division_by_zero">Error: Division by zero is not allowed</string>
 </resources>

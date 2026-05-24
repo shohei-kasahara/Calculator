@@ -58,6 +58,10 @@ class MainActivity : AppCompatActivity() {
         btnDivision.setOnClickListener {
             val num1 = etNumber1.text.toString().toDoubleOrNull() ?: 0.0
             val num2 = etNumber2.text.toString().toDoubleOrNull() ?: 0.0
+            if (num2 == 0.0) {
+                tvResult.text = getString(R.string.error_division_by_zero)
+                return@setOnClickListener
+            }
             val result = num1 / num2
             tvResult.text = getString(R.string.result, result)
         }
