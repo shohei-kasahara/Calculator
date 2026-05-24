@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         val btnMultiplication = findViewById<Button>(R.id.btnMultiplication)
         val btnDivision = findViewById<Button>(R.id.btnDivision)
         val tvResult = findViewById<TextView>(R.id.tvResult)
+        val btnClear = findViewById<Button>(R.id.btnClear)
 
         tvResult.text = getString(R.string.result_format)
 
@@ -59,6 +60,12 @@ class MainActivity : AppCompatActivity() {
             val num2 = etNumber2.text.toString().toDoubleOrNull() ?: 0.0
             val result = num1 / num2
             tvResult.text = getString(R.string.result, result)
+        }
+
+        btnClear.setOnClickListener {
+            etNumber1.text.clear()
+            etNumber2.text.clear()
+            tvResult.text = getString(R.string.result_format)
         }
 
 
