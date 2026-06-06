@@ -8,8 +8,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 
 class MainActivity : AppCompatActivity() {
+
+    // ViewModel instance
+    private lateinit var viewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,38 +37,51 @@ class MainActivity : AppCompatActivity() {
 
         tvResult.text = getString(R.string.result_format)
 
+        // Initialize the ViewModel and set up an observer for the calculation results.
+        // This ensures the UI stays updated even after configuration changes like screen rotation.
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel.result.observe(this) {
+            tvResult.text = it
+        }
+
 
         btnAddition.setOnClickListener {
             val num1 = etNumber1.text.toString().toDoubleOrNull() ?: 0.0
             val num2 = etNumber2.text.toString().toDoubleOrNull() ?: 0.0
 
             val result = num1 + num2
-            tvResult.text = getString(R.string.result, result)
+            // tvResult.text = getString(R.string.result, result)
+            viewModel.result.value = getString(R.string.result, result)
         }
 
         btnSubtraction.setOnClickListener {
             val num1 = etNumber1.text.toString().toDoubleOrNull() ?: 0.0
             val num2 = etNumber2.text.toString().toDoubleOrNull() ?: 0.0
             val result = num1 - num2
-            tvResult.text = getString(R.string.result, result)
+            // tvResult.text = getString(R.string.result, result)
+            viewModel.result.value = getString(R.string.result, result)
         }
 
         btnMultiplication.setOnClickListener {
             val num1 = etNumber1.text.toString().toDoubleOrNull() ?: 0.0
             val num2 = etNumber2.text.toString().toDoubleOrNull() ?: 0.0
             val result = num1 * num2
-            tvResult.text = getString(R.string.result, result)
+            //tvResult.text = getString(R.string.result, result)
+
+            viewModel.result.value = getString(R.string.result, result)
         }
 
         btnDivision.setOnClickListener {
             val num1 = etNumber1.text.toString().toDoubleOrNull() ?: 0.0
             val num2 = etNumber2.text.toString().toDoubleOrNull() ?: 0.0
             if (num2 == 0.0) {
-                tvResult.text = getString(R.string.error_division_by_zero)
+                // tvResult.text = getString(R.string.error_division_by_zero)
+                viewModel.result.value = getString(R.string.error_division_by_zero)
                 return@setOnClickListener
             }
             val result = num1 / num2
-            tvResult.text = getString(R.string.result, result)
+            // tvResult.text = getString(R.string.result, result)
+            viewModel.result.value = getString(R.string.result, result)
         }
 
         btnClear.setOnClickListener {
